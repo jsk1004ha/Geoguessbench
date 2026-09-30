@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Geoguessbench — Evaluation Console</title>
+<link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script>
+</head>
+<body>
+<header><a class="brand" href="/"><span class="brand-mark">G</span>Geoguessbench<span class="version">0.1</span></a><span class="header-note">VISUAL GEOLOCATION / EVALUATION CONSOLE</span><span class="status" id="connection">연결 확인 중</span></header>
+<main>
+<section class="intro"><div><p class="eyebrow">OBSERVE. EXPLORE. LOCATE.</p><h1>단서는 화면에.<br>정답은 평가 서버에.</h1><p class="subtitle">실제 거리 이미지로 위치 추론과 탐색 효율을 평가합니다.<br>모든 참가자는 동일한 시점, 순서, 행동 예산으로 시작합니다.</p></div><div class="protocol-card"><span class="eyebrow">ACTIVE PROTOCOL</span><strong id="track">—</strong><span id="protocol-details">평가 설정을 읽고 있습니다.</span><code id="fingerprint">DATASET / —</code></div></section>
+<div class="workspace">
+<aside class="panel"><div class="section-title"><span>01</span><h2>실험 설정</h2></div>
+<label for="token">평가 서버 토큰 <span>로컬은 생략 가능</span></label><input id="token" type="password" autocomplete="off" placeholder="BENCH_TOKEN">
+<label for="participant">참가자</label><input id="participant" value="human" maxlength="160">
+<button class="primary" id="start">새 평가 시작 <span>↗</span></button>
+<label for="run-id">Run ID</label><input id="run-id" placeholder="실행 중인 평가 이어받기" spellcheck="false"><button id="resume">기존 평가 연결</button>
+<div class="note"><strong>AI 모델 평가</strong><p>모델은 터미널의 <code>evaluate</code> 명령으로 연결합니다. 이 화면은 사람의 직접 평가와 실제 결과 확인용입니다.</p></div>
+<div class="note"><strong>평가 원칙</strong><p>검색·외부 도구 없이 <b>출발 위치</b>를 제출하세요. 진행 중 정답과 중간 점수는 공개되지 않습니다. 실패도 전체 문항 수에 포함됩니다.</p></div>
+<button id="load-report">결과 JSON 열기</button><input id="report-file" type="file" accept="application/json,.json" hidden>
+</aside>
+<section class="panel arena"><div class="arena-top"><span class="eyebrow">OBSERVATION</span><span id="round">대기 중</span><span class="badge" id="timer">—</span></div>
+<div class="viewport"><div id="empty"><span class="compass">⊕</span><h2>아직 관측을 시작하지 않았습니다.</h2><p>평가를 시작하면 실제 데이터셋 이미지가 표시됩니다.<br>데모 사진이나 임의 생성 위치는 사용하지 않습니다.</p></div><img id="view" alt="현재 위치의 거리 관측 이미지" hidden></div>
+<div class="telemetry"><span>방향 <b id="heading">—</b></span><span>시야각 <b id="fov">—</b></span><span>행동 잔여 <b id="budget">—</b></span><span>비용 잔여 <b id="cost">—</b></span></div>
+<div class="controls" id="controls"><button data-type="turn" data-degrees="-30" disabled>↶ 30°</button><button data-type="turn" data-degrees="30" disabled>↷ 30°</button><button data-type="look" data-degrees="20" disabled>위 보기</button><button data-type="look" data-degrees="0" disabled>수평</button><button data-type="zoom" data-fov="40" disabled>확대</button><button data-type="zoom" data-fov="90" disabled>원래 시야</button></div>
+<div id="exits" class="controls"></div>
+<div class="answer"><div class="section-title"><span>02</span><h2>출발 위치 제출</h2></div><div class="coordinate-fields"><label>위도<input id="lat" type="number" min="-90" max="90" step="any" placeholder="−90 ~ 90"></label><label>경도<input id="lon" type="number" min="-180" max="180" step="any" placeholder="−180 ~ 180"></label><label>25 km 이내 확률<input id="confidence" type="number" min="0" max="1" step="0.05" placeholder="선택 · 0 ~ 1"></label></div><div class="submit-row"><button class="primary" id="submit" disabled>좌표 확정</button><button id="abstain" disabled>기권</button></div></div>
+</section>
+</div>
+<p id="message" role="status" aria-live="polite"></p>
+<section class="panel results" id="results" hidden><div class="section-title"><span>03</span><h2>평가 결과</h2><button id="download-report">JSON 저장</button></div><p id="report-label"></p><div class="result-grid" id="summary"></div><table><thead><tr><th>위치 오차 기준</th><th>정확도</th></tr></thead><tbody id="accuracy"></tbody></table><p class="muted">정확도와 평균 점수에는 실패 문항이 포함됩니다. 탐색 비용은 위치 점수에서 임의로 차감하지 않습니다.</p></section>
+</main>
+<footer>Geoguessbench · Independent research infrastructure · Not affiliated with GeoGuessr<br>이미지 출처와 이용 조건은 평가 서버의 데이터셋 manifest에 보존됩니다.</footer>
+</body></html>

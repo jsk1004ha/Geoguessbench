@@ -1,0 +1,1 @@
+{"track":"moving","split":"test","seed":42,"max_actions":20,"max_cost":40,"time_limit_s":300,"width":960,"height":640,"initial_fov":90,"lower_band_mask":0,"bootstrap_samples":2000}
